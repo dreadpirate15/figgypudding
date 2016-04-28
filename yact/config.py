@@ -49,7 +49,7 @@ class Config(object):
                     self.ts_refreshed = datetime.now()
                     self.ts_refreshed_utc = datetime.utcnow()
             except Exception as e:  # TODO: Split out into handling file IO and parsing errors
-                raise InvalidConfigFile('{} failed to load: {}'.format(self.filename, e))
+                raise InvalidConfigFile('{0} failed to load: {1}'.format(self.filename, e))
 
     def get(self, key, default=None):
         """
@@ -78,7 +78,7 @@ class Config(object):
                     if data.get(name) is None:
                         data[name] = {}
                 else:
-                    raise ConfigEditFailed("Unable to set {}: {} is an invalid child of {}".format(
+                    raise ConfigEditFailed("Unable to set {0}: {1} is an invalid child of {2}".format(
                         key,
                         name,
                         type(data)
@@ -117,19 +117,19 @@ class Config(object):
         if directory:
             prefixes.insert(0, directory)
         if os.path.exists(filename) and not os.path.isdir(filename):
-            logger.debug('Retrieving config from full path {}'.format(filename))
+            logger.debug('Retrieving config from full path {0}'.format(filename))
             path = filename
         else:
-            logger.debug('Searching for path to {}'.format(filename))
+            logger.debug('Searching for path to {0}'.format(filename))
             for p in prefixes:
                 temp = os.path.join(p, filename)
                 print(temp)
                 if os.path.exists(temp) and not os.path.isdir(temp):
-                    logger.debug("Found {} in {}".format(filename, p))
+                    logger.debug("Found {0} in {1}".format(filename, p))
                     path = temp
                     break
             else:
-                raise MissingConfig('{} does not exist'.format(filename))
+                raise MissingConfig('{0} does not exist'.format(filename))
         config = cls(file=path, unsafe=unsafe)
         config.refresh()
         return config
@@ -147,7 +147,7 @@ class Config(object):
                 yaml.dump(self._data, f, default_flow_style=False)
 
     def __repr__(self):
-        return "{}({})".format(self.__class__.__name__, self.filename)
+        return "{0}({1})".format(self.__class__.__name__, self.filename)
 
     def __getitem__(self, item):
         with self._lock:

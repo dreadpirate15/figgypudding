@@ -85,7 +85,7 @@ class test_yact(unittest.TestCase):
         Does repr do what I expect?
         """
         config = yact.from_file(self.SAMPLE_CFG)
-        self.assertEqual(str(config), '{}({})'.format(config.__class__.__name__, self.SAMPLE_CFG))
+        self.assertEqual(str(config), '{0}({1})'.format(config.__class__.__name__, self.SAMPLE_CFG))
 
 
 if __name__ == "__main__":
